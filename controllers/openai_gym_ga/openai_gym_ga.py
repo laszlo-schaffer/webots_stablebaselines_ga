@@ -32,7 +32,7 @@ except ImportError:
         'Please make sure you have all dependencies installed. '
         'Run: "pip3 install numpy gym stable_baselines3 sb3_contrib pygad"'
     )
-    
+
 # global variables
 env_global = None
 alg_global = None
@@ -210,16 +210,13 @@ if __name__ == '__main__':
     # Initialize the environment
 
     alg_list = ["TRPO", "PPO", "DQN", "DDPG", "SAC", "TD3"]  # full list
-    alg_to_run = "TRPO"
-    # alg_to_run = None
+    # alg_to_run = "TRPO"  # can be run with only one algorithm
+    alg_to_run = None
 
     # with the given solution vector
-    # sol = [256, 0.878810722275697, 4000, 72000, 0.749925080419856]  # DQN best
-    # sol = [64, 0.42606948276819134, 50, 0.265483348858523, 0.03482744338983934]  # PPO best
-    # sol = [128, 0.5319043091499475, 5200, 5400, 0.6528674693902464]  # SAC best
-    sol = None
+    sol = None  # can be run with the given solution vector, if train is False
 
-    train = False  # if True and alg_to_run is not None, then trains only with that algorithm
+    train = False  # if True and alg_to_run is not None, then trains only with that algorithm, else with the given list
     train_global = train
     discrete = False
     env_global = OpenAIGymEnvironment(max_episode_steps=2048, discrete=discrete)
@@ -234,7 +231,11 @@ if __name__ == '__main__':
                     alg_global = alg
 
                     # Init ga logger
-                    handler = WatchedFileHandler(os.path.join("logs", alg, "ga_log.log"))
+                    ga_log_path = os.path.join("logs", alg, "ga_log.log")
+                    if not os.path.exists(ga_log_path):
+                        os.makedirs(os.path.dirname(ga_log_path))
+
+                    handler = WatchedFileHandler(ga_log_path)
                     formatter = logging.Formatter("%(asctime)s.%(msecs)03d;%(levelname)s;%(message)s",
                                                   "%Y-%m-%d %H:%M:%S")
                     handler.setFormatter(formatter)
