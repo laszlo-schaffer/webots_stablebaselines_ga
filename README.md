@@ -7,7 +7,7 @@ Requirements:
 - sb3_contrib
 - pygad
 
-The project was used with Python3.9.
+The project was used with Python3.9 and Webots2023a.
 
 # Install
 
@@ -51,7 +51,7 @@ One can extend this list with changing the `params` dictionary in the utils.py f
  - discrete - Action space type of the algorithm, if uses gym.space.Discrete then it should be True
  - total timesteps - Maximum steps for one episode, the bigger it is the longer the optimisation will become
  
- PyGAD package is used for the genetic algorithm based parameter optimisation:
+ PyGAD package is used for the genetic algorithm based parameter optimisation [^2]:
  
  ```
  ga_instance = pygad.GA(num_generations=5,
@@ -65,5 +65,5 @@ One can extend this list with changing the `params` dictionary in the utils.py f
                        on_generation=log_generation)
 ```
                                 
-# References
-[^1] Antonin Raffin et.al, Stable-Baselines3: Reliable Reinforcement Learning Implementations, 22(268):1−8, 2021.
+[^1]: Antonin Raffin et.al, Stable-Baselines3: Reliable Reinforcement Learning Implementations, 22(268):1−8, 2021.
+[^2]: Ahmed Fawzy Gad, PyGAD: An Intuitive Genetic Algorithm Python Library, arXiv:2106.06158 
