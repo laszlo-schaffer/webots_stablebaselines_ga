@@ -20,7 +20,7 @@ The framework uses stable baselines RL algorithms and pygad genetic algorithm fo
 
 Can be run after installing the dependencies and opening the Webots world. By default it will optimise the algorithms given in the `alg_list` list with 2048 steps for one simulation, the genetic algorith runs with the following parameters: 5 generation, 25 solution per population, two parents and random mutation. The gene type and the gene space is given by the params dictionary, which contains the parameters for the used RL algorithms. The optimisation is logged to the `logs\algorithm\ga_log.log` file. Also the RL training is logged to the `logs\algorithm\progress.csv` file. The final model is saved to the `models\algorithm\algorithm.zip` file.   
 
-Currently the framework supports the following RL algorithms (from stablebaselines3 and stablebaselines3_contrib):
+Currently the framework supports the following RL algorithms (from stablebaselines3 and stablebaselines3_contrib) [^1]:
 - TRPO
 - PPO
 - DQN
@@ -65,4 +65,5 @@ One can extend this list with changing the `params` dictionary in the utils.py f
                        on_generation=log_generation)
 ```
                                 
- 
+# References
+[^1] Antonin Raffin et.al, Stable-Baselines3: Reliable Reinforcement Learning Implementations, 22(268):1−8, 2021.
