@@ -6,12 +6,13 @@ Requirements:
 - stable_baselines3
 - sb3_contrib
 - pygad
+- pandas
 
 The project was used with Python3.9 and Webots2023a.
 
 # Install
 
-`pip3 install numpy gym stable_baselines3 sb3_contrib pygad`
+`pip3 install numpy gym stable_baselines3 sb3_contrib pygad pandas`
 
 If you want to use CUDA, then proceed with [this](https://pytorch.org/get-started/locally/).
 
