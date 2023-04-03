@@ -17,7 +17,15 @@ The project was used with Python3.9 and Webots2023a.
 If you want to use CUDA, then proceed with [this](https://pytorch.org/get-started/locally/).
 
 # Usage
-The framework uses stable baselines RL algorithms and pygad genetic algorithm for parameter optimisation in a Webots based environment. In this example a cartpole based sample Webots world is used, it can be found on the [Webots webpage](https://www.cyberbotics.com/doc/guide/samples-howto?version=master#openai_gym-wbt).
+The framework uses stable baselines RL algorithms and pygad genetic algorithm for parameter optimisation in a Webots based environment. 
+In the 'cartpole_openai' directory an example can be found, which contains a cartpole based sample Webots world (based on the openai Webots example [world](https://www.cyberbotics.com/doc/guide/samples-howto?version=master#openai_gym-wbt).
+
+In the 'pioneer_follow' directory a custom Webots environment can be found, which contains a Pioneer 3-DX mobile robot. The goal is to follow the white cube using the following observations:
+- wheel velocity
+- distance from object
+- relative orientation between the robot and the object
+
+The action space can be discrete or continuous. If discrete then action is represented by 4 binary values, which are stop, move forward, turn left, turn right. If the action space is continuous, then two floats are used, which control the motors directly with values in the range of [0.0, 12.0].
 
 Can be run after installing the dependencies and opening the Webots world. By default it will optimise the algorithms given in the `alg_list` list with 2048 steps for one simulation, the genetic algorith runs with the following parameters: 5 generation, 25 solution per population, two parents and random mutation. The gene type and the gene space is given by the params dictionary, which contains the parameters for the used RL algorithms. The optimisation is logged to the `logs\algorithm\ga_log.log` file. Also the RL training is logged to the `logs\algorithm\progress.csv` file. The final model is saved to the `models\algorithm\algorithm.zip` file.   
 
