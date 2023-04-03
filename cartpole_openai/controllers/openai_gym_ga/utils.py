@@ -1,3 +1,7 @@
+import numpy as np
+from controller import Supervisor
+import gym
+
 params = {
     'TRPO': {
         'parameters': ['learning_rate', 'batch_size', 'gamma', 'n_critic_updates', 'gae_lambda', 'target_kl'],

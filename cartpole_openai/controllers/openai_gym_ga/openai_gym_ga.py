@@ -16,7 +16,6 @@ import sys
 import os
 import logging
 from logging.handlers import WatchedFileHandler
-from controller import Supervisor
 from utils import params, OpenAIGymEnvironment
 
 try:
@@ -37,9 +36,9 @@ except ImportError:
 env_global = None
 alg_global = None
 train_global = None
-total_timesteps_global = 100_000
+total_timesteps_global = 0
 ga_instance = None
-
+last_train_global = None
 # stablebaselines logger
 tmp_path = ""
 new_logger = None
@@ -56,7 +55,10 @@ def fitness_function(solution, solution_idx):
     reward = run_env(env_global, alg_global, train_global, total_timesteps=total_timesteps_global,
                   replay=True, solution=solution, logger=new_logger)
     print("Reward:", reward)
-    ga_log.info("{};{}".format(solution, reward))
+    if last_train_global:
+        ga_log.debug("{};[{}];{}".format(alg_global, " ".join(np.array(solution).astype(str)), reward))
+    else:
+        ga_log.info("{};[{}];{}".format(alg_global, " ".join(np.array(solution).astype(str)), reward))
     return reward
 
 
@@ -147,7 +149,12 @@ def run_env(env=None, alg=None, train=True, total_timesteps=100_000, replay=True
             return
         if logger is not None:
             model.set_logger(logger)
-        model.learn(total_timesteps=total_timesteps)
+        try:
+            model.learn(total_timesteps=total_timesteps)
+        except ValueError as e:
+            print(e)
+            del model
+            return -1000
 
         # Save model
         model.save(os.path.join(save_dir, alg + ".zip"))
@@ -216,7 +223,7 @@ if __name__ == '__main__':
     # with the given solution vector
     sol = None  # can be run with the given solution vector, if train is False
 
-    train = False  # if True and alg_to_run is not None, then trains only with that algorithm, else with the given list
+    train = True  # if True and alg_to_run is not None, then trains only with that algorithm, else with the given list
     train_global = train
     discrete = False
     env_global = OpenAIGymEnvironment(max_episode_steps=2048, discrete=discrete)
@@ -241,6 +248,7 @@ if __name__ == '__main__':
                     handler.setFormatter(formatter)
                     ga_log = logging.getLogger("ga_log")
                     ga_log.setLevel(os.environ.get("LOGLEVEL", "DEBUG"))
+                    ga_log.handlers.clear()
                     ga_log.addHandler(handler)
 
                     # configure training logger
@@ -287,7 +295,11 @@ if __name__ == '__main__':
                     # ga_instance.save(filename=filename)
 
                     # Run the training again with the best solution, but with longer timeframe
-                    total_timesteps_global += 50_000
+                    total_timesteps_global = 100_000
+                    
+                    # It is the last train after GA opt.
+                    last_train_global = True
+                    
                     reward = fitness_function(solution, solution_idx)
 
                 except AssertionError as e:
@@ -304,13 +316,13 @@ if __name__ == '__main__':
             new_logger = configure(tmp_path, ["csv", "tensorboard"])
 
             # Run the training again with a given solution
-            total_timesteps_global += 100_000
+            total_timesteps_global = 100_000
             reward = fitness_function(sol, 0)
     else:
         try:
             discrete = params[alg_to_run]['discrete']
 
             env_global.set_action_space(discrete)
-            run_env(env_global, alg_to_run, train=False)
+            run_env(env_global, alg_to_run, total_timesteps=100_000, train=False)
         except AssertionError as e:
             print(alg_to_run, e)
