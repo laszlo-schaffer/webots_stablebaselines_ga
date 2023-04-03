@@ -27,6 +27,8 @@ In the 'pioneer_follow' directory a custom Webots environment can be found, whic
 
 The action space can be discrete or continuous. If discrete then action is represented by 4 binary values, which are stop, move forward, turn left, turn right. If the action space is continuous, then two floats are used, which control the motors directly with values in the range of [0.0, 12.0].
 
+#TODO reward and done
+
 Can be run after installing the dependencies and opening the Webots world. By default it will optimise the algorithms given in the `alg_list` list with 2048 steps for one simulation, the genetic algorith runs with the following parameters: 5 generation, 25 solution per population, two parents and random mutation. The gene type and the gene space is given by the params dictionary, which contains the parameters for the used RL algorithms. The optimisation is logged to the `logs\algorithm\ga_log.log` file. Also the RL training is logged to the `logs\algorithm\progress.csv` file. The final model is saved to the `models\algorithm\algorithm.zip` file.   
 
 Currently the framework supports the following RL algorithms (from stablebaselines3 and stablebaselines3_contrib) [^1]:
