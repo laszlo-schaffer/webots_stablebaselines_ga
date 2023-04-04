@@ -27,7 +27,13 @@ In the 'pioneer_follow' directory a custom Webots environment can be found, whic
 
 The action space can be discrete or continuous. If discrete then action is represented by 4 binary values, which are stop, move forward, turn left, turn right. If the action space is continuous, then two floats are used, which control the motors directly with values in the range of [0.0, 12.0].
 
-#TODO reward and done
+The reward is shaped as follows:
+- if $|\phi_{diff}| <= 20^{\circ}$: $r_{\phi} = \frac{|\phi_{diff}|}{2*20^{\circ}}$, else $r_{\phi} = -1 * \frac{|\phi_{diff}|}{\pi}$
+- if $v_{wheels} == 0$ and $d_{goal} > 1$: $r_{d} = -1$, else if $v_{wheels} == 0$ and $d_{goal} < 1$: $r_{d} = 1$,else if $d_{goal} < 1$: r_{d} = 0.5, else if $d_{ratio} < 0$: $r_{d} = -0.5$, else $r_{d} = -1*d_{ratio}$
+
+So reward is given if the relative orientation is lower or equal than 20 degrees, or the velocity is zero, but the goal is reached (distance < 1 meters), or half reward is given, when the goal is reached but the velocity is not zero. On the other hand, punishment is given when relative orientation is bigger than 20 deegrees, or the velocity is zero when the goal is not reached yet, or the robot is moving away from the goal.
+
+Where $d_{ratio} = \frac{1}{2} - \frac{d_{goal}}{2*d_{init}}$. The done flag is true, when the $d_{goal} >=1$ and $\bar{v} < 0.1$ or the simulation has reached a pre-set value, in this case 500 timesteps. 
 
 Can be run after installing the dependencies and opening the Webots world. By default it will optimise the algorithms given in the `alg_list` list with 2048 steps for one simulation, the genetic algorith runs with the following parameters: 5 generation, 25 solution per population, two parents and random mutation. The gene type and the gene space is given by the params dictionary, which contains the parameters for the used RL algorithms. The optimisation is logged to the `logs\algorithm\ga_log.log` file. Also the RL training is logged to the `logs\algorithm\progress.csv` file. The final model is saved to the `models\algorithm\algorithm.zip` file.   
 
