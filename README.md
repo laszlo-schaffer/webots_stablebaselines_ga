@@ -25,7 +25,7 @@ In the 'pioneer_follow' directory a custom Webots environment can be found, whic
 - distance from object
 - relative orientation between the robot and the object
 
-The action space can be discrete or continuous. If discrete then action is represented by 4 binary values, which are stop, move forward, turn left, turn right. If the action space is continuous, then two floats are used, which control the motors directly with values in the range of [0.0, 12.0].
+The action space can be discrete or continuous. If discrete the action is represented by 4 binary values, which are stop, move forward, turn left, turn right. If the action space is continuous, then two floats are used, which control the motors directly with values in the range of [0.0, 12.0].
 
 The reward is shaped as follows:
 - if $|\phi_{diff}| <= 20^{\circ}$: $r_{\phi} = \frac{|\phi_{diff}|}{2*20^{\circ}}$, else $r_{\phi} = -1 * \frac{|\phi_{diff}|}{\pi}$
