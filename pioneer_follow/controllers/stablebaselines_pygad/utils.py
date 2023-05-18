@@ -290,19 +290,19 @@ class PioneerPath(Supervisor, gym.Env):
         if np.abs(ori_diff) <= np.deg2rad(20):
             reward_local += np.abs(ori_diff) / (np.deg2rad(20) * 2)  # max 0.5 point
         else:
-            reward_local -= np.abs(ori_diff) / np.pi  # max 0.5 point
+            reward_local -= np.abs(ori_diff) / np.pi  # max 1 point
         distance_ratio = (1 - (distance / self.init_dist)) * 0.5  # max 0.5
 
         if self.velocity == 0 and distance > 1:
-            reward_local = -1.0
+            reward_local += -1.0
         elif self.velocity == 0 and distance < 1:
-            reward_local = 1.0
-        elif distance < 1:
-            reward_local = 0.5
-        elif distance_ratio < 0:
-            reward_local -= 0.5
-        else:
-            reward_local -= distance_ratio
+            reward_local += 1.0
+        elif self.velocity > 0 and distance < 1:
+            reward_local += 0.5
+        elif self.velocity > 0 and distance > self.init_dist# ekv.: distance_ratio < 0:
+            reward_local += -0.5
+        #else:  # it is not required, because in this case velocity is negative, that is not possible in this env.
+        #    reward_local += -distance_ratio
         reward_local = 0 if done else reward_local
         self.trainsteps += 1
 
