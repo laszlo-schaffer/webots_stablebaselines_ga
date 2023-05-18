@@ -1,4 +1,4 @@
-# Parameter optimisation of different reinforcement learning algorithms using genetic algorithm in Webots environment
+# Hyperparameter optimisation of different reinforcement learning algorithms using genetic algorithm in Webots environment
 
 Requirements:
 - gym
