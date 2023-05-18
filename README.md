@@ -1,5 +1,7 @@
 # Hyperparameter optimisation of different reinforcement learning algorithms using genetic algorithm in Webots environment
 
+![cartpole_objfollow_webots](https://github.com/laszlo-schaffer/webots_stablebaselines_ga/assets/73738851/6d0dddc0-af0f-46a3-94cb-91ec2b7d6fed)
+
 Requirements:
 - gym
 - numpy
