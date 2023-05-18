@@ -22,10 +22,14 @@ If you want to use CUDA, then proceed with [this](https://pytorch.org/get-starte
 The framework uses stable baselines RL algorithms and pygad genetic algorithm for parameter optimisation in a Webots based environment. 
 In the 'cartpole_openai' directory an example can be found, which contains a cartpole based sample Webots world (based on the openai Webots example [world](https://www.cyberbotics.com/doc/guide/samples-howto?version=master#openai_gym-wbt).
 
+![cartpole_rl_ddpg](https://github.com/laszlo-schaffer/webots_stablebaselines_ga/assets/73738851/5a84612a-4422-4cbb-bd12-a60d842570ac)
+
 In the 'pioneer_follow' directory a custom Webots environment can be found, which contains a Pioneer 3-DX mobile robot. The goal is to follow the white cube using the following observations:
 - wheel velocity
 - distance from object
 - relative orientation between the robot and the object
+
+![ppw_dqn_1](https://github.com/laszlo-schaffer/webots_stablebaselines_ga/assets/73738851/b5fcd340-ee0f-4f89-bac3-50a1d00453c8)
 
 The action space can be discrete or continuous. If discrete the action is represented by 4 binary values, which are stop, move forward, turn left, turn right. If the action space is continuous, then two floats are used, which control the motors directly with values in the range of [0.0, 12.0].
 
