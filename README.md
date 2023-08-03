@@ -89,7 +89,7 @@ One can extend this list with changing the `params` dictionary in the utils.py f
                        on_generation=log_generation)
 ```
 
-If you use this project, please cite: Publication in progress
+If you use this project, please cite: Under review, IEEE 23rd International Symposium on Computational Intelligence and Informatics (CINTI 2023).
                                 
 [^1]: Antonin Raffin et.al, Stable-Baselines3: Reliable Reinforcement Learning Implementations, 22(268):1−8, 2021.
 [^2]: Ahmed Fawzy Gad, PyGAD: An Intuitive Genetic Algorithm Python Library, arXiv:2106.06158 
