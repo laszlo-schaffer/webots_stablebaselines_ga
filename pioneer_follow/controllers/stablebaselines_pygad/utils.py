@@ -288,7 +288,7 @@ class PioneerPath(Supervisor, gym.Env):
         reward_local = 0
         ori_diff = get_relative_orientation(self.current_pos, self.imu.getRollPitchYaw()[2], self.goal_pos)
         if np.abs(ori_diff) <= np.deg2rad(20):
-            reward_local += np.abs(ori_diff) / (np.deg2rad(20) * 2)  # max 0.5 point
+            reward_local += (np.deg2rad(20) - np.abs(ori_diff)) / (np.deg2rad(20) * 2)  # max 0.5 point
         else:
             reward_local -= np.abs(ori_diff) / np.pi  # max 1 point
         distance_ratio = (1 - (distance / self.init_dist)) * 0.5  # max 0.5
