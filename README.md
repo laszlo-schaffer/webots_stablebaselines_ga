@@ -29,7 +29,7 @@ The action space can be discrete or continuous. If discrete the action is repres
 
 The reward is shaped as follows:
 - $r = r_{\phi} + r_{d}$
-- if $|\phi_{rel}| <= \beta $: $r_{\phi} = \frac{|\phi_{rel}|}{2*\beta}$, else $r_{\phi} = -1 * \frac{|\phi_{rel}|}{\pi}$
+- if $|\phi_{rel}| <= \beta $: $r_{\phi} = \frac{\beta - |\phi_{rel}|}{2*\beta}$, else $r_{\phi} = -1 * \frac{|\phi_{rel}|}{\pi}$
 - if $v_{wheels} == 0$ and $d_{goal} > 1$: $r_{d} = -1$, else if $v_{wheels} == 0$ and $d_{goal} < 1$: $r_{d} = 1$,else if $d_{goal} < 1$: $r_{d} = 0.5$, else if $v_{wheels} > 0$ and $d_{goal} > d_{init}$: $r_{d} = -0.5$
 
 So reward is given if the relative orientation is lower or equal than 20 degrees, or the velocity is zero, but the goal is reached (distance < 1 meters), or half reward is given, when the goal is reached but the velocity is not zero. On the other hand, punishment is given when relative orientation is bigger than 20 deegrees, or the velocity is zero when the goal is not reached yet, or the robot is moving away from the goal.
@@ -83,7 +83,7 @@ One can extend this list with changing the `params` dictionary in the utils.py f
                        on_generation=log_generation)
 ```
 
-If you use this project, please cite: Under review, IEEE 23rd International Symposium on Computational Intelligence and Informatics (CINTI 2023).
+If you use this project, please cite: L. Schaffer, Z. Kincses, Sz. Pletl, "Hyperparameter Optimisation of Reinforcement Learning Algorithms in Webots Simulation Environment", IEEE 23rd International Symposium on Computational Intelligence and Informatics (CINTI 2023), 2023
                                 
 [^1]: Antonin Raffin et.al, Stable-Baselines3: Reliable Reinforcement Learning Implementations, 22(268):1−8, 2021.
 [^2]: Ahmed Fawzy Gad, PyGAD: An Intuitive Genetic Algorithm Python Library, arXiv:2106.06158 
